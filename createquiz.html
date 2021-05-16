@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+    <div class="topnav">
+        <a class="active" href="facultyhome.html">&#10502; Back</a>
+      </div>
+<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-firestore.js"></script>
+<style>
+    .topnav {
+    overflow: hidden;
+    background-color: #2F4F4F;
+    padding: 0 12%;
+  }
+  .topnav a {
+    float: left;
+    color: #DAA520;
+    text-align: center;
+    padding: 14px 16px;
+    text-align: left;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  .topnav a:hover {
+    background-color: rgba(252, 249, 113, 0.205);
+    color: white;
+    transition: 0.5s;
+  }
+  footer {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	background-color: #2F4F4F;
+	color: #DAA520 ;
+	text-align: center;
+}
+.t{
+	border:3px solid #DAA520;
+	border-radius: 8px;
+	padding:8px;
+	width:500px;
+}
+.t2{
+	border:3px solid #DAA520;
+	border-radius: 8px;
+	padding:8px;
+	margin-right: 180px;
+}
+.mini{
+    border:3px solid #DAA520;
+	border-radius: 8px;
+	padding:8px;
+	margin-right: 180px;
+    width:45px;
+}
+.cc{
+	border:3px solid #06f106;
+	border-radius: 8px;
+	padding:8px;
+	margin-right: 180px;
+}
+.button1{
+	font-weight: bold;
+	letter-spacing: 3px;
+	color:#DAA520;
+	background-color: #E6E6FA;
+	padding:5px;
+	border-radius: 8px;
+	
+}
+.button1:hover{
+	background-color: #4B0082;
+	transform: scale(1.1);
+}
+body {
+  background-color: #000;
+}
+.f{
+	border: none;
+  color: #4CAF50
+
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  margin-top: 50px;
+  background-color: #FFEBCD;
+  padding:100px;
+	border-radius:20px;
+	margin-left: 290px; 
+	padding-bottom: 40px;
+
+	color:#DAA520;
+}
+</style>
+
+</head>
+<body>
+    <div class="f">
+<input type="number" placeholder="Q.no"  class="mini" id="qno"><br>
+<input type="text" placeholder="Question"  class="t" id="question"><br>
+<input type="text" placeholder="option 1" class="t2" id="option 1"><br>
+<input type="text" placeholder="option 2" class="t2" id="option 2"><br>
+<input type="text" placeholder="option 3" class="t2" id="option 3"><br>
+<input type="text" placeholder="option 4" class="t2"  id="option 4"><br><br>
+<input type="text" placeholder="correct choice" class="cc" id="cchoice"><br><br>
+<button id="btn" class="button1" onclick="Insertq()">insert</button>
+<button id="btn"class="button1" onclick="Deleteq()">Delete</button>
+<button id="btn" class="button1" onclick="Updateq()">Update</button>
+<button id="btn" class="button1" onclick="Displayq()">Display</button>
+</div>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<script>
+  // Your web app's Firebase configuration
+	  var firebaseConfig = {
+	    apiKey: "AIzaSyC3DdEFgtDu1RLpGztdVErwWb53yz38UFc",
+	    authDomain: "sampleproject-46193.firebaseapp.com",
+	    projectId: "sampleproject-46193",
+	    storageBucket: "sampleproject-46193.appspot.com",
+	    messagingSenderId: "487281861795",
+	    appId: "1:487281861795:web:c377285b06557d2e328b16"
+	  };
+	  // Initialize Firebase
+	  firebase.initializeApp(firebaseConfig);
+	  var qno=document.getElementById('qno').value;
+	  function Ready(){
+	  			let nname= document.getElementById('txt').value;
+	  			let nrollno= document.getElementById('rollno').value;
+	  			let marks=document.getElementById('marks').value;
+	  			let ngrade=document.getElementById('grade').value;
+	  		
+	  }
+	  function Insertq(){
+	  			let qno= document.getElementById('qno').value;
+	  			let question= document.getElementById('question').value;
+	  			let op1=document.getElementById('option 1').value;
+	  			let op2=document.getElementById('option 2').value;
+	  			let op3=document.getElementById('option 3').value;
+	  			let op4=document.getElementById('option 4').value;
+	  			let cchoice=document.getElementById('cchoice').value;
+	  	firebase.database().ref('Questions/'+Number(qno)).set({
+	  			Question: question
+	  		
+	  	});
+	  	firebase.database().ref('Options/'+Number(qno)).set({
+	  			c1: op1,
+	  			c2:op2,
+	  			c3:op3,
+	  			c4:op4
+	  		
+	  	});
+	  	firebase.database().ref('corrrectChoices/'+Number(qno)).set({
+	  			correctChoice:cchoice
+	  		
+	  	});
+
+	  }
+	  function Deleteq(){
+	  	let qno= document.getElementById('qno').value;
+	  	firebase.database().ref('Questions/'+Number(qno)).remove();
+	  	firebase.database().ref('Options/'+Number(qno)).remove();
+	  	firebase.database().ref('corrrectChoices/'+Number(qno)).remove();
+	  }
+	  function Displayq(){
+	  	let qno= document.getElementById('qno').value;
+	  	firebase.database().ref('Questions/'+qno).on('value',function(snapshot){
+	  		document.getElementById('question').value=snapshot.val().Question;
+	  	});
+	  	firebase.database().ref('Options/'+Number(qno)).on('value',function(snapshot){
+	  		document.getElementById('option 1').value=snapshot.val().c1;
+	  		document.getElementById('option 2').value=snapshot.val().c2;
+	  		document.getElementById('option 3').value=snapshot.val().c3;
+	  		document.getElementById('option 4').value=snapshot.val().c4;
+	  	});
+	  	firebase.database().ref('corrrectChoices/'+Number(qno)).on('value',function(snapshot){
+	  		document.getElementById('cchoice').value=snapshot.val().correctChoice;
+	  	});
+	  }
+	  function Updateq(){
+	  			let qno= document.getElementById('qno').value;
+	  			let question= document.getElementById('question').value;
+	  			let op1=document.getElementById('option 1').value;
+	  			let op2=document.getElementById('option 2').value;
+	  			let op3=document.getElementById('option 3').value;
+	  			let op4=document.getElementById('option 4').value;
+	  			let cchoice=document.getElementById('cchoice').value;
+	  	firebase.database().ref('Questions/'+Number(qno)).update({
+	  			Question: question
+	  		
+	  	});
+	  	firebase.database().ref('Options/'+Number(qno)).update({
+	  			c1: op1,
+	  			c2:op2,
+	  			c3:op3,
+	  			c4:op4
+	  		
+	  	});
+	  	firebase.database().ref('corrrectChoices/'+Number(qno)).update({
+	  			correctChoice:cchoice
+	  		
+	  	});
+	  }
+</script>
+</body>
+<footer>
+    <p>Developed for VIT</p>
+  
+  </footer>
+</html>

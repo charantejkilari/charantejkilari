@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-firestore.js"></script>
+</head>
+<body>
+<form>
+	Rollno:   <input type="text" id="rollno" name ="rollno" oninput="Update(this.value,'rollno')"><br>
+	Name  :   <input type="text" id="name" name="name" oninput="Update(this.value,'name')"><br>
+	Marks :   <input type="text" id="marks" name="marks" oninput="Update(this.value,'marks')"><br>
+	Grade :   <input type="text" id="grade" name="grade" oninput="Update(this.value,'grade')"><br><br>	
+	<button id="Insert">Insert</button>
+	<button id="Delete">Delete</button>
+	<button id="Updatebtn">Update</button>
+	<button id="Display">Display</button>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+ 
+
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-analytics.js"></script>
+
+<script id="main">
+
+	let name=document.getElementById('name').value;
+	let rollno=document.getElementById('rollno').value;
+	let marks=document.getElementById('marks').value;
+	let grade=document.getElementById('grade').value;
+
+	let nname,nrollno,nmarks,ngrade;
+	function Update(val,type){
+		if(type=='name') nname=val;
+		else if(type=='rollno') nrollno=val;
+		else if(type=='marks') nmarks=val;
+		else if(type=='grade') ngrade=val;
+	}
+	// Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+	  var firebaseConfig = {
+	    apiKey: "AIzaSyBe9vegVzMAfQrKSsK8Tx1_BREC2QHTkSw",
+	    authDomain: "sampletrav.firebaseapp.com",
+	    databaseURL: "https://sampletrav-default-rtdb.firebaseio.com",
+	    projectId: "sampletrav",
+	    storageBucket: "sampletrav.appspot.com",
+	    messagingSenderId: "560436563766",
+	    appId: "1:560436563766:web:d998201b01b09a6504ed97",
+	    measurementId: "G-C7WF3R393M"
+	  };
+	  // Initialize Firebase
+	  firebase.initializeApp(firebaseConfig);
+	  firebase.analytics();
+	  let cdb=firebase.firestore();
+
+
+	  document.getElementById('Insert').onclick=function(){
+	  	cdb.collection("Students").add(
+		  	{
+		  		NameOfTheStudent: nname,
+			  	RollNumber: Number(nrollno),
+			  	Marks: nmarks,
+			  	Grade: ngrade
+		  	}
+
+	  		)
+	  }
+	  document.getElementById('Delete').onclick=function(){
+	  	
+	  }
+	  document.getElementById('Updatebtn').onclick=function(){
+	  	
+	  }
+	  document.getElementById('Display').onclick=function(){
+	  	
+	  }
+
+
+</script>
+</body>
+</html>
